@@ -4,12 +4,35 @@ const startButton = document.querySelector('#start');
 // TODO: Add the missing query selectors:
 const score = document.querySelector('#score'); // Use querySelector() to get the score element
 const timerDisplay = document.querySelector('#timer'); // use querySelector() to get the timer element.
+// TODO: Play audioFX and music
+
 
 let time = 0;
 let timer = 10;
 let lastHole = 0;
 let points = 0;
 let difficulty = "easy";
+
+const audioHit = new Audio("https://github.com/DevelopedbyRick/js-dev-final-capstone-starter-whack-a-mole/blob/main/assets/hit.mp3?raw=true");
+const song = new Audio("https://github.com/DevelopedbyRick/js-dev-final-capstone-starter-whack-a-mole/blob/main/assets/molesong.mp3?raw=true");
+
+
+function playAudio(audioObject) {
+  audioObject.play();
+}
+
+function loopAudio(audioObject) {
+  audioObject.loop = true;
+  playAudio(audioObject);
+}
+
+function stopAudio(audioObject) {
+  audioObject.pause();
+}
+
+function play(){
+  playAudio(song);
+}
 
 /**
  * Generates a random integer within a range.
@@ -220,6 +243,7 @@ function startTimer() {
 */
 function whack(event) {
   // TODO: Write your code here.
+  playAudio(audioHit);
   updateScore();
   return points;
 }
@@ -259,7 +283,7 @@ function setDuration(duration) {
 *
 */
 function stopGame(){
-  // stopAudio(song);  //optional
+  stopAudio(song);  //optional
   clearInterval(timer);
   return "game stopped";
 }
@@ -273,13 +297,15 @@ function stopGame(){
 function startGame(){
   setDuration(10);
   showUp();
+  setEventListeners();
+  playAudio(song)
   startTimer();
   clearScore();
-  setEventListeners();
   return "game started";
 }
 
 startButton.addEventListener("click", startGame);
+
 
 
 // Please do not modify the code below.
